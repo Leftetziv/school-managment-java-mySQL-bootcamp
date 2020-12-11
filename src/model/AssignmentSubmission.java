@@ -70,14 +70,4 @@ public class AssignmentSubmission {
         this.submissionBriefing = submissionBriefing;
     }
 
-    public void print() {
-        String format = "%-5s%-5s%-5s%-20s%-32s%n";
-        System.out.printf(format,
-                assignmentSubmissionId,
-                oralMark,
-                TotalMark,
-                submissionDate,
-                submissionBriefing.getTitle());
-    }
-
 }

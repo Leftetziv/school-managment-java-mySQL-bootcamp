@@ -6,7 +6,13 @@
 package services;
 
 import dao.*;
+import java.util.ArrayList;
+import java.util.List;
 import model.AssignmentBriefing;
+import model.Course;
+import static services.StudentService.columnPrint;
+import static services.StudentService.print;
+import utilities.ReadFromUserUtilities;
 
 /**
  *
@@ -22,7 +28,20 @@ public class AssignmentBriefingService {
     }
 
     public static void printAssignmentBriefingsPerCourse() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AssignmentBriefingDao dao = DaoFactory.getAssignmentBriefingDao();
+        CourseDao cdao = DaoFactory.getCourseDao();
+        List<Long> selections = new ArrayList<>();
+        
+        System.out.println("Enter the course ID to view its assignments Briefings:");
+        List<Course> courses = cdao.getAll();
+        CourseService.columnPrint();
+        courses.stream().forEach(i -> CourseService.print(i));
+
+        courses.stream().forEach(i -> selections.add(i.getCourseId()));
+        long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
+        
+        columnPrint();
+        dao.getAssignmentBriefingPerCourse(courseId).stream().forEach(i -> print(i));
     }
 
     public static void print(AssignmentBriefing ass) {
@@ -40,7 +59,7 @@ public class AssignmentBriefingService {
                 ass.getDescription()
         );
     }
-
+    
     public static void columnPrint() {
         String formatColumn = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n";
         System.out.printf(formatColumn,

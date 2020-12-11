@@ -105,7 +105,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 + "             courses        \n"
                 + "WHERE	assignment_submissions.assignment_brief_id = assignment_briefings.assignment_brief_id\n"
                 + "		and assignment_briefings.course_id = courses.course_id\n"
-                + "             and courses.course_id = 4;";
+                + "             and courses.course_id = ?;";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
