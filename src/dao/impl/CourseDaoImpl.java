@@ -7,6 +7,7 @@ package dao.impl;
 
 import dao.CourseDao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,17 +28,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> getAll() {
-        String sql = "SELECT	courses.course_id, \n"
-                + "		courses.title,\n"
-                + "             streams.stream,\n"
-                + "             types.type, \n"
-                + "             courses.start_date, \n"
-                + "             courses.end_date \n"
-                + "FROM 	courses, \n"
-                + "		streams,\n"
-                + "             types\n"
-                + "where 	courses.type_id = types.type_id\n"
-                + "		and courses.stream_id = streams.stream_id;";
+        String sql = "SELECT * FROM courses;";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -53,8 +44,8 @@ public class CourseDaoImpl implements CourseDao {
 
                 c.setCourseId(rs.getInt("course_id"));
                 c.setTitle(rs.getString("title"));
-                c.setStream(rs.getString("stream"));
-                c.setType(rs.getString("type"));
+                c.setStream(rs.getLong("stream_id"));
+                c.setType(rs.getLong("type_id"));
                 c.setStartDate(rs.getDate("start_date").toLocalDate());
                 c.setEndDate(rs.getDate("end_date").toLocalDate());
 
@@ -70,24 +61,34 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean save(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean save(Course c) {
+        String sql = "INSERT INTO courses (`title`, `stream_id`, `type_id`, `start_date`, 'end_date') VALUES (?, ?, ?, ?, ?);";
+
+        PreparedStatement ps = null;
+        int updateSuccess = 0;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, c.getTitle());
+            ps.setLong(2, c.getStream());
+            ps.setLong(3, c.getType());
+            ps.setDate(4, Date.valueOf(c.getStartDate()));
+            ps.setDate(5, Date.valueOf(c.getEndDate()));
+
+            updateSuccess = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DBConnection.closeConnection(ps, con);
+        }
+
+        return updateSuccess == 1;
     }
 
     @Override
     public Course get(long id) {
-        String sql = "SELECT	courses.course_id, \n"
-                + "		courses.title,\n"
-                + "             streams.stream,\n"
-                + "             types.type, \n"
-                + "             courses.start_date, \n"
-                + "             courses.end_date \n"
-                + "FROM 	courses, \n"
-                + "		streams,\n"
-                + "             types\n"
-                + "where 	courses.type_id = types.type_id\n"
-                + "		and courses.stream_id = streams.stream_id\n"
-                + "             and course_id = ?;";
+        String sql = "SELECT * FROM courses where course_id = ?;";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -102,8 +103,8 @@ public class CourseDaoImpl implements CourseDao {
             if (rs.next()) {
                 course.setCourseId(rs.getInt("course_id"));
                 course.setTitle(rs.getString("title"));
-                course.setStream(rs.getString("stream"));
-                course.setType(rs.getString("type"));
+                course.setStream(rs.getLong("stream_id"));
+                course.setType(rs.getLong("type_id"));
                 course.setStartDate(rs.getDate("start_date").toLocalDate());
                 course.setEndDate(rs.getDate("end_date").toLocalDate());
             }

@@ -32,7 +32,7 @@ public class StudentService {
         StudentDao dao = DaoFactory.getStudentDao();
         CourseDao cdao = DaoFactory.getCourseDao();
         List<Long> selections = new ArrayList<>();
-        
+
         System.out.println("Enter the course ID to view its students:");
         List<Course> courses = cdao.getAll();
         CourseService.columnPrint();
@@ -40,7 +40,7 @@ public class StudentService {
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
         long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
-        
+
         columnPrint();
         dao.getStudentsPerCourse(courseId).stream().forEach(i -> print(i));
     }
@@ -53,6 +53,30 @@ public class StudentService {
     public static void columnPrint() {
         String formatColumn = "%-5s%-23s%-23s%-15s%-10s%n";
         System.out.printf(formatColumn, "ID", "First Name", "First Name", "Date Of Birth", "Tuition Fees");
+    }
+
+    public static void addStudent() {
+        StudentDao dao = DaoFactory.getStudentDao();
+
+        Student student = new Student();
+        System.out.println("Creating student for the course:");
+        System.out.println("Enter the student first name:");
+        student.setFirstName(ReadFromUserUtilities.readString());
+        System.out.println("Enter the student last name:");
+        student.setLastName(ReadFromUserUtilities.readString());
+        System.out.println("Enter the student date of birth:");
+        student.setDateOfBirth(ReadFromUserUtilities.readDate());
+        System.out.println("Enter the student tuition fees:");
+        student.setTuitionFees(ReadFromUserUtilities.readDouble());
+
+        boolean success = dao.save(student);
+
+        if (success) {
+            System.out.println("Insertion successful");
+        } else {
+            System.out.println("Insertion failed");
+        }
+
     }
 
 }

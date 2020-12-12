@@ -41,4 +41,15 @@ public class DaoFactory {
         return new TrainersCoursesDaoImpl();
     }
     
+    public static StreamDao getStreamDao() {
+        return new StreamDaoImpl();
+    }
+    public static TypeDao getTypeDao() {
+        return new TypeDaoImpl();
+    }
+    public static SubjectDao getSubjectDao() {
+        return new SubjectDaoImpl();
+    }
+    
+    
 }

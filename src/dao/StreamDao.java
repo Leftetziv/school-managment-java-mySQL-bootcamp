@@ -6,14 +6,15 @@
 package dao;
 
 import java.util.List;
-import model.Student;
-import model.Trainer;
+import model.lookup_tables.Stream;
 
 /**
  *
  * @author Leyteris
  */
-public interface TrainersCoursesDao {
+public interface StreamDao {
 
-    boolean save(long sid, long cid);
+    List<Stream> getAll();
+
+    Stream get(Long id);
 }

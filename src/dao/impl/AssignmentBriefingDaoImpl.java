@@ -9,6 +9,7 @@ import dao.AssignmentBriefingDao;
 import dao.CourseDao;
 import dao.DaoFactory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,8 +65,31 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
     }
 
     @Override
-    public boolean save(AssignmentBriefing t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean save(AssignmentBriefing br) {
+        String sql = "INSERT INTO assignment_briefings (`title`, `description`, `max_oral_mark`, `max_total_mark`, 'due_date, 'course_id', 'is_group_project') VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+        PreparedStatement ps = null;
+        int updateSuccess = 0;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, br.getTitle());
+            ps.setString(2, br.getDescription());
+            ps.setInt(3, br.getMaxOralMark());
+            ps.setInt(4, br.getMaxTotalMark());
+            ps.setDate(5, Date.valueOf(br.getDueDate().toLocalDate())); //todo fix
+            ps.setLong(6, br.getBelongingCourse().getCourseId());
+            ps.setBoolean(7, br.isIsGroupProject());
+            
+            updateSuccess = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DBConnection.closeConnection(ps, con);
+        }
+
+        return updateSuccess == 1;
     }
 
     @Override

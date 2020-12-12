@@ -10,6 +10,7 @@ import dao.AssignmentSubmissionDao;
 import dao.CourseDao;
 import dao.DaoFactory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,8 +63,28 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
     }
 
     @Override
-    public boolean save(AssignmentSubmission t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean save(AssignmentSubmission subm) {
+        String sql = "INSERT INTO assignment_submissions (`oral_mark`, `total_mark`, `submission_date`, `assignment_brief_id`) VALUES (?, ?, ?, ?);";
+
+        PreparedStatement ps = null;
+        int updateSuccess = 0;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, subm.getOralMark());
+            ps.setInt(2, subm.getTotalMark());
+            ps.setDate(3, Date.valueOf(subm.getSubmissionDate().toLocalDate())); //todo fix
+            ps.setLong(4, subm.getSubmissionBriefing().getAssignmentBriefId());
+
+            updateSuccess = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DBConnection.closeConnection(ps, con);
+        }
+
+        return updateSuccess == 1;
     }
 
     @Override
@@ -150,7 +171,6 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 + "        and assignment_submissions.assignment_submission_id = students_assignment_submissions.assignment_submission_id\n"
                 + "        and students_assignment_submissions.student_id = ?\n"
                 + "        and courses.course_id = ?;";
-                
 
         PreparedStatement ps = null;
         ResultSet rs = null;

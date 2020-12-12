@@ -172,6 +172,26 @@ public class ReadFromUserUtilities {
             }
         } while (true);
     }
+    
+    public static double readDouble() {
+        String answerStr;
+        double answerInt;
+
+        do {
+            answerStr = sc.nextLine();
+
+            try {
+                answerInt = Double.parseDouble(answerStr);
+                if (answerInt < 0) {
+                    System.out.println("Cant be a negative number");
+                    continue;
+                }
+                return answerInt;
+            } catch (NumberFormatException e) {
+                System.out.println("Must input a number");
+            }
+        } while (true);
+    }
 
     public static boolean readYesOrNo() {
         String answerStr;

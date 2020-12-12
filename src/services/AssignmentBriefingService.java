@@ -45,6 +45,8 @@ public class AssignmentBriefingService {
     }
 
     public static void print(AssignmentBriefing ass) {
+        StreamDao sdao = DaoFactory.getStreamDao();
+        TypeDao tdao = DaoFactory.getTypeDao();
         String format = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n%s%n%n";
         System.out.printf(format,
                 ass.getAssignmentBriefId(),
@@ -54,8 +56,8 @@ public class AssignmentBriefingService {
                 ass.getDueDate(),
                 ass.isIsGroupProject() ? "Group" : "Individual",
                 ass.getBelongingCourse().getTitle(),
-                ass.getBelongingCourse().getStream(),
-                ass.getBelongingCourse().getType(),
+                sdao.get(ass.getBelongingCourse().getStream()).getStream(),
+                tdao.get(ass.getBelongingCourse().getType()).getType(),
                 ass.getDescription()
         );
     }
@@ -73,6 +75,10 @@ public class AssignmentBriefingService {
                 "Course Stream",
                 "Course Type"
         );
+    }
+
+    public static void addAssignmentBriefing() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

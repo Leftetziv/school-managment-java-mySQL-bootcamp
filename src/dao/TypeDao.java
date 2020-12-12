@@ -6,14 +6,17 @@
 package dao;
 
 import java.util.List;
-import model.Student;
-import model.Trainer;
+import model.lookup_tables.Stream;
+import model.lookup_tables.Type;
 
 /**
  *
  * @author Leyteris
  */
-public interface TrainersCoursesDao {
+public interface TypeDao {
 
-    boolean save(long sid, long cid);
+    List<Type> getAll();
+    
+    Type get(Long id);
+
 }

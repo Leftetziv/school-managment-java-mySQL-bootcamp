@@ -9,6 +9,7 @@ import dao.DaoFactory;
 import dao.*;
 import model.Course;
 import model.Student;
+import utilities.ReadFromUserUtilities;
 
 /**
  *
@@ -18,19 +19,26 @@ public class CourseService {
 
     public static void printAllCourses() {
         CourseDao dao = DaoFactory.getCourseDao();
-        
+
         columnPrint();
         dao.getAll().stream().forEach(i -> print(i));
     }
 
     public static void print(Course c) {
+        StreamDao sdao = DaoFactory.getStreamDao();
+        TypeDao tdao = DaoFactory.getTypeDao();
         String format = "%-5s%-23s%-23s%-23s%-15s%-15s%n";
-        System.out.printf(format, c.getCourseId(), c.getTitle(), c.getStream(), c.getType(), c.getStartDate(), c.getEndDate());
+        System.out.printf(format, c.getCourseId(), c.getTitle(), sdao.get(c.getStream()).getStream(), tdao.get(c.getType()).getType(), c.getStartDate(), c.getEndDate());
     }
 
     public static void columnPrint() {
         String formatColumn = "%-5s%-23s%-23s%-23s%-15s%-15s%n";
         System.out.printf(formatColumn, "ID", "Title", "Stream", "Type", "Start Date", "End Date");
+    }
+
+    public static void addCourse() {
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

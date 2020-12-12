@@ -7,6 +7,7 @@ package dao.impl;
 
 import dao.TrainerDao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,17 +27,12 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Override
     public List<Trainer> getTrainersPerCourse(long id) {
-        String sql = "SELECT 	trainers.trainer_id,	\n"
-                + "		trainers.first_name,\n"
-                + "		trainers.last_name,\n"
-                + "             subjects.subject\n"
+        String sql = "SELECT 	* \n" 
                 + "FROM 	trainers, \n"
-                + "		subjects,\n"
                 + "             trainers_courses,\n"
                 + "		courses\n"
                 + "WHERE 	trainers.trainer_id = trainers_courses.trainer_id\n"
                 + "		and courses.course_id = trainers_courses.course_id\n"
-                + "             and trainers.subject_id = subjects.subject_id\n"
                 + "             and courses.course_id = ?";
         
         PreparedStatement ps = null;
@@ -55,7 +51,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getString("subject"));
+                t.setSubject(rs.getLong("subject_id"));
 
                 trainers.add(t);
             }
@@ -70,9 +66,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Override
     public List<Trainer> getAll() {
-        String sql = "SELECT  trainers.trainer_id, trainers.first_name, trainers.last_name, subjects.subject "
-                + "FROM trainers, subjects "
-                + "WHERE trainers.subject_id = subjects.subject_id;";
+        String sql = "SELECT * FROM trainers;";   
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Trainer> trainers = new ArrayList<>();
@@ -88,7 +82,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getString("subject"));
+                t.setSubject(rs.getLong("subject_id"));
 
                 trainers.add(t);
             }
@@ -103,15 +97,31 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Override
     public boolean save(Trainer t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO trainers (`first_name`, `last_name`, `subject_id`) VALUES (?, ?, ?);";
+
+        PreparedStatement ps = null;
+        int updateSuccess = 0;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, t.getFirstName());
+            ps.setString(2, t.getLastName());
+            ps.setLong(3, t.getSubject());
+            
+            updateSuccess = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DBConnection.closeConnection(ps, con);
+        }
+
+        return updateSuccess == 1;
     }
 
     @Override
     public Trainer get(long id) {
-        String sql = "SELECT  trainers.trainer_id, trainers.first_name, trainers.last_name, subjects.subject "
-                + "FROM trainers, subjects "
-                + "WHERE trainers.subject_id = subjects.subject_id"
-                + "and trainer_id = ?;";
+        String sql = "SELECT  * FROM trainers WHERE trainer_id = ?;";              
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -127,7 +137,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getString("subject"));
+                t.setSubject(rs.getLong("subject"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

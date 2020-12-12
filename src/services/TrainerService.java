@@ -46,14 +46,19 @@ public class TrainerService {
         dao.getTrainersPerCourse(courseId).stream().forEach(i -> print(i));
     }
 
-    public static void print(Trainer t ){
+    public static void print(Trainer t) {
+        SubjectDao sdao = DaoFactory.getSubjectDao();
         String format = "%-5s%-23s%-23s%-15s%n";
-        System.out.printf(format, t.getTrainerId(), t.getFirstName(), t.getLastName(), t.getSubject());
+        System.out.printf(format, t.getTrainerId(), t.getFirstName(), t.getLastName(), sdao.get(t.getSubject()).getSubject());
     }
 
     public static void columnPrint() {
         String formatColumn = "%-5s%-23s%-23s%-15s%n";
         System.out.printf(formatColumn, "ID", "First Name", "Last Name", "Subject");
+    }
+
+    public static void addTrainer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

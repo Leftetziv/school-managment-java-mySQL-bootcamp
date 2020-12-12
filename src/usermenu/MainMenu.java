@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainmenu;
+package usermenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import utilities.ReadFromUserUtilities;
  *
  * @author Leyteris
  */
-public class RegistryOffice {
+public class MainMenu {
 
     public static void main(String[] args) {
         
@@ -44,7 +44,7 @@ public class RegistryOffice {
         
         do {
             System.out.println(choiceMenu);
-            answerLong = ReadFromUserUtilities.readNumberOrQuit(LongStream.rangeClosed(1, 11).boxed().collect(Collectors.toList()));
+            answerLong = ReadFromUserUtilities.readNumberOrQuit(LongStream.rangeClosed(1, 12).boxed().collect(Collectors.toList()));
 
             if (answerLong != -1) {
                 switch (answerLong.intValue()) {
@@ -103,11 +103,11 @@ public class RegistryOffice {
                         System.out.println("Press enter to continue...");
                         sc.nextLine();
                         break;
-//                    case 12:    //add new
-//                        Bootcamp.printMulticourseStudents();
-//                        System.out.println("Press enter to continue...");
-//                        sc.nextLine();
-//                        break;
+                    case 12:    //add new
+                        AddMenu.addElement();
+                        System.out.println("Press enter to continue...");
+                        sc.nextLine();
+                        break;
                     default:
                         System.out.println("Enter on of the given numbers");
                 }

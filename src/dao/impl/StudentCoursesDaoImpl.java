@@ -23,6 +23,8 @@ public class StudentCoursesDaoImpl implements StudentsCoursesDao {
 
     private Connection con = null;
 
+    
+    
     @Override
     public List<Student> getStudentsInMultipleCourses() {
         String sql = "select	students.*\n"
@@ -59,6 +61,11 @@ public class StudentCoursesDaoImpl implements StudentsCoursesDao {
         }
 
         return students;
+    }
+
+    @Override
+    public boolean save(long sid, long cid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

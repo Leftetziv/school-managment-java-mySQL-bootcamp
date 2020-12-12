@@ -21,4 +21,8 @@ public class StudentCourseService {
         dao.getStudentsInMultipleCourses().stream().forEach(i -> StudentService.print(i));
     }
 
+    public static void enrollStudent() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

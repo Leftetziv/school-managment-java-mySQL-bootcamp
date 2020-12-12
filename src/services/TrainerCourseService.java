@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.impl;
-
-import dao.TrainersCoursesDao;
+package services;
 
 /**
  *
  * @author Leyteris
  */
-public class TrainersCoursesDaoImpl implements TrainersCoursesDao{
+public class TrainerCourseService {
 
-    @Override
-    public boolean save(long sid, long cid) {
+    public static void assignTrainer() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -6,6 +6,7 @@
 package model;
 
 import java.time.LocalDate;
+import model.lookup_tables.*;
 
 /**
  *
@@ -15,21 +16,12 @@ public class Course {
 
     private long courseId;
     private String title;
-    private String stream;
-    private String type;
+    private long stream;
+    private long type;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public Course() {
-    }
-
-    public Course(long course_id, String title, String stream, String type, LocalDate startDate, LocalDate endDate) {
-        this.courseId = course_id;
-        this.title = title;
-        this.stream = stream;
-        this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public long getCourseId() {
@@ -48,19 +40,19 @@ public class Course {
         this.title = title;
     }
 
-    public String getStream() {
+    public long getStream() {
         return stream;
     }
 
-    public void setStream(String stream) {
+    public void setStream(long stream) {
         this.stream = stream;
     }
 
-    public String getType() {
+    public long getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(long type) {
         this.type = type;
     }
 

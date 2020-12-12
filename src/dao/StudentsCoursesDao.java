@@ -13,6 +13,8 @@ import model.Student;
  * @author Leyteris
  */
 public interface StudentsCoursesDao {
-        List<Student> getStudentsInMultipleCourses();
 
+    List<Student> getStudentsInMultipleCourses();
+
+    boolean save(long sid, long cid);
 }

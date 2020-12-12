@@ -7,6 +7,7 @@ package dao.impl;
 
 import dao.StudentDao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,8 +60,28 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public boolean save(Student t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean save(Student s) {
+        String sql = "INSERT INTO students (`first_name`, `last_name`, `date_of_birth`, `tuition_fees`) VALUES (?, ?, ?, ?);";
+
+        PreparedStatement ps = null;
+        int updateSuccess = 0;
+
+        try {
+            con = DBConnection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, s.getFirstName());
+            ps.setString(2, s.getLastName());
+            ps.setDate(3, Date.valueOf(s.getDateOfBirth()));
+            ps.setDouble(4, s.getTuitionFees());
+            
+            updateSuccess = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            DBConnection.closeConnection(ps, con);
+        }
+
+        return updateSuccess == 1;
     }
 
     @Override
@@ -72,7 +93,7 @@ public class StudentDaoImpl implements StudentDao {
                 + "WHERE 	students.student_id = students_courses.student_id\n"
                 + "		and courses.course_id = students_courses.course_id\n"
                 + "             and courses.course_id = ?;";
-        
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Student> students = new ArrayList<>();

@@ -55,5 +55,16 @@ public class DBConnection {
                 ex.printStackTrace();
             }
     }
+    
+    public static void closeConnection(PreparedStatement ps, Connection con) {
+        try {
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+            }
+    }
 
 }
