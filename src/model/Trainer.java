@@ -14,7 +14,7 @@ public class Trainer {
     private long trainerId;
     private String firstName;
     private String lastName;
-    private long subject;
+    private long subjectId;
 
     public Trainer() {
     }
@@ -43,12 +43,12 @@ public class Trainer {
         this.lastName = lastName;
     }
 
-    public long getSubject() {
-        return subject;
+    public long getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubject(long subject) {
-        this.subject = subject;
+    public void setSubjectId(long subjectId) {
+        this.subjectId = subjectId;
     }
 
     

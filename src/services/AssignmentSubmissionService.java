@@ -77,13 +77,15 @@ public class AssignmentSubmissionService {
     }
 
     public static void print(AssignmentSubmission ass) {
+        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
+
         String format = "%-5s%-12s%-12s%-20s%-32s%n";
         System.out.printf(format,
                 ass.getAssignmentSubmissionId(),
                 ass.getOralMark(),
                 ass.getTotalMark(),
                 ass.getSubmissionDate(),
-                ass.getSubmissionBriefing().getTitle()
+                brdao.get(ass.getSubmissionBriefingId()).getTitle()
         );
     }
 

@@ -19,21 +19,10 @@ public class AssignmentBriefing {
     private int maxOralMark;
     private int maxTotalMark;
     private LocalDateTime dueDate;
-    private Course belongingCourse;
+    private long belongingCourseId;
     private boolean isGroupProject;
 
     public AssignmentBriefing() {
-    }
-
-    public AssignmentBriefing(long assignmentBriefId, String title, String description, int maxOralMark, int maxTotalMark, LocalDateTime dueDate, Course belongingCourse, boolean isGroupProject) {
-        this.assignmentBriefId = assignmentBriefId;
-        this.title = title;
-        this.description = description;
-        this.maxOralMark = maxOralMark;
-        this.maxTotalMark = maxTotalMark;
-        this.dueDate = dueDate;
-        this.belongingCourse = belongingCourse;
-        this.isGroupProject = isGroupProject;
     }
 
     public long getAssignmentBriefId() {
@@ -84,13 +73,15 @@ public class AssignmentBriefing {
         this.dueDate = dueDate;
     }
 
-    public Course getBelongingCourse() {
-        return belongingCourse;
+    public long getBelongingCourseId() {
+        return belongingCourseId;
     }
 
-    public void setBelongingCourse(Course belongingCourse) {
-        this.belongingCourse = belongingCourse;
+    public void setBelongingCourseId(long belongingCourseId) {
+        this.belongingCourseId = belongingCourseId;
     }
+
+    
 
     public boolean isIsGroupProject() {
         return isGroupProject;
@@ -98,21 +89,6 @@ public class AssignmentBriefing {
 
     public void setIsGroupProject(boolean isGroupProject) {
         this.isGroupProject = isGroupProject;
-    }
-
-    public void print() {
-        String format = "%-5s%-32s%-5s%-5s%-20s%-15s%-15s%-15s%-15s%n%s%n%n";
-        System.out.printf(format,
-                assignmentBriefId,
-                title,
-                maxOralMark,
-                maxTotalMark,
-                dueDate,
-                isGroupProject ? "Group" : "Individual",
-                belongingCourse.getTitle(),
-                belongingCourse.getStream(),
-                belongingCourse.getType(),
-                description);
     }
 
 }

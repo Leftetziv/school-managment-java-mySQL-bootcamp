@@ -31,7 +31,7 @@ public class AssignmentBriefingService {
         AssignmentBriefingDao dao = DaoFactory.getAssignmentBriefingDao();
         CourseDao cdao = DaoFactory.getCourseDao();
         List<Long> selections = new ArrayList<>();
-        
+
         System.out.println("Enter the course ID to view its assignments Briefings:");
         List<Course> courses = cdao.getAll();
         CourseService.columnPrint();
@@ -39,7 +39,7 @@ public class AssignmentBriefingService {
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
         long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
-        
+
         columnPrint();
         dao.getAssignmentBriefingPerCourse(courseId).stream().forEach(i -> print(i));
     }
@@ -47,6 +47,10 @@ public class AssignmentBriefingService {
     public static void print(AssignmentBriefing ass) {
         StreamDao sdao = DaoFactory.getStreamDao();
         TypeDao tdao = DaoFactory.getTypeDao();
+        CourseDao cdao = DaoFactory.getCourseDao();
+
+        Course BelongingCourse = cdao.get(ass.getBelongingCourseId());
+        
         String format = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n%s%n%n";
         System.out.printf(format,
                 ass.getAssignmentBriefId(),
@@ -55,13 +59,13 @@ public class AssignmentBriefingService {
                 ass.getMaxTotalMark(),
                 ass.getDueDate(),
                 ass.isIsGroupProject() ? "Group" : "Individual",
-                ass.getBelongingCourse().getTitle(),
-                sdao.get(ass.getBelongingCourse().getStream()).getStream(),
-                tdao.get(ass.getBelongingCourse().getType()).getType(),
+                BelongingCourse.getTitle(),  
+                sdao.get(BelongingCourse.getStreamId()).getStream(),
+                tdao.get(BelongingCourse.getTypeId()).getType(),
                 ass.getDescription()
         );
     }
-    
+
     public static void columnPrint() {
         String formatColumn = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n";
         System.out.printf(formatColumn,

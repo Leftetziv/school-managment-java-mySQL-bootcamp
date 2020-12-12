@@ -49,7 +49,7 @@ public class TrainerService {
     public static void print(Trainer t) {
         SubjectDao sdao = DaoFactory.getSubjectDao();
         String format = "%-5s%-23s%-23s%-15s%n";
-        System.out.printf(format, t.getTrainerId(), t.getFirstName(), t.getLastName(), sdao.get(t.getSubject()).getSubject());
+        System.out.printf(format, t.getTrainerId(), t.getFirstName(), t.getLastName(), sdao.get(t.getSubjectId()).getSubject());
     }
 
     public static void columnPrint() {

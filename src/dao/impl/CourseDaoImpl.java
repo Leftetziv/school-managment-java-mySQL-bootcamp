@@ -44,8 +44,8 @@ public class CourseDaoImpl implements CourseDao {
 
                 c.setCourseId(rs.getInt("course_id"));
                 c.setTitle(rs.getString("title"));
-                c.setStream(rs.getLong("stream_id"));
-                c.setType(rs.getLong("type_id"));
+                c.setStreamId(rs.getLong("stream_id"));
+                c.setTypeId(rs.getLong("type_id"));
                 c.setStartDate(rs.getDate("start_date").toLocalDate());
                 c.setEndDate(rs.getDate("end_date").toLocalDate());
 
@@ -71,8 +71,8 @@ public class CourseDaoImpl implements CourseDao {
             con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, c.getTitle());
-            ps.setLong(2, c.getStream());
-            ps.setLong(3, c.getType());
+            ps.setLong(2, c.getStreamId());
+            ps.setLong(3, c.getTypeId());
             ps.setDate(4, Date.valueOf(c.getStartDate()));
             ps.setDate(5, Date.valueOf(c.getEndDate()));
 
@@ -103,8 +103,8 @@ public class CourseDaoImpl implements CourseDao {
             if (rs.next()) {
                 course.setCourseId(rs.getInt("course_id"));
                 course.setTitle(rs.getString("title"));
-                course.setStream(rs.getLong("stream_id"));
-                course.setType(rs.getLong("type_id"));
+                course.setStreamId(rs.getLong("stream_id"));
+                course.setTypeId(rs.getLong("type_id"));
                 course.setStartDate(rs.getDate("start_date").toLocalDate());
                 course.setEndDate(rs.getDate("end_date").toLocalDate());
             }

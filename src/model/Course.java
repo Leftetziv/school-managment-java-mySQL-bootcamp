@@ -16,8 +16,8 @@ public class Course {
 
     private long courseId;
     private String title;
-    private long stream;
-    private long type;
+    private long streamId;
+    private long typeId;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -40,20 +40,20 @@ public class Course {
         this.title = title;
     }
 
-    public long getStream() {
-        return stream;
+    public long getStreamId() {
+        return streamId;
     }
 
-    public void setStream(long stream) {
-        this.stream = stream;
+    public void setStreamId(long streamId) {
+        this.streamId = streamId;
     }
 
-    public long getType() {
-        return type;
+    public long getTypeId() {
+        return typeId;
     }
 
-    public void setType(long type) {
-        this.type = type;
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
     }
 
     public LocalDate getStartDate() {

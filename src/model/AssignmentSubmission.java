@@ -17,18 +17,10 @@ public class AssignmentSubmission {
     private int oralMark;
     private int TotalMark;
     private LocalDateTime submissionDate;
-    private AssignmentBriefing submissionBriefing;
+    private long submissionBriefingId;
 
     public AssignmentSubmission() {
-    }
-
-    public AssignmentSubmission(long assignmentSubmissionId, int oralMark, int TotalMark, LocalDateTime submissionDate, AssignmentBriefing submissionBriefing) {
-        this.assignmentSubmissionId = assignmentSubmissionId;
-        this.oralMark = oralMark;
-        this.TotalMark = TotalMark;
-        this.submissionDate = submissionDate;
-        this.submissionBriefing = submissionBriefing;
-    }
+    }  
 
     public long getAssignmentSubmissionId() {
         return assignmentSubmissionId;
@@ -62,12 +54,14 @@ public class AssignmentSubmission {
         this.submissionDate = submissionDate;
     }
 
-    public AssignmentBriefing getSubmissionBriefing() {
-        return submissionBriefing;
+    public long getSubmissionBriefingId() {
+        return submissionBriefingId;
     }
 
-    public void setSubmissionBriefing(AssignmentBriefing submissionBriefing) {
-        this.submissionBriefing = submissionBriefing;
+    public void setSubmissionBriefingId(long submissionBriefingId) {
+        this.submissionBriefingId = submissionBriefingId;
     }
+
+    
 
 }

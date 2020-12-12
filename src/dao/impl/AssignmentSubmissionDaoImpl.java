@@ -35,7 +35,6 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentSubmission> submissions = new ArrayList<>();
-        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
 
         try {
             con = DBConnection.getConnection();
@@ -49,7 +48,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 submission.setOralMark(rs.getInt("oral_mark"));
                 submission.setTotalMark(rs.getInt("total_mark"));
                 submission.setSubmissionDate(rs.getTimestamp("submission_date").toLocalDateTime());
-                submission.setSubmissionBriefing(brdao.get(rs.getInt("assignment_brief_id")));
+                submission.setSubmissionBriefingId(rs.getInt("assignment_brief_id"));
 
                 submissions.add(submission);
             }
@@ -63,7 +62,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
     }
 
     @Override
-    public boolean save(AssignmentSubmission subm) {
+    public boolean save(AssignmentSubmission submission) {
         String sql = "INSERT INTO assignment_submissions (`oral_mark`, `total_mark`, `submission_date`, `assignment_brief_id`) VALUES (?, ?, ?, ?);";
 
         PreparedStatement ps = null;
@@ -72,10 +71,10 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
         try {
             con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, subm.getOralMark());
-            ps.setInt(2, subm.getTotalMark());
-            ps.setDate(3, Date.valueOf(subm.getSubmissionDate().toLocalDate())); //todo fix
-            ps.setLong(4, subm.getSubmissionBriefing().getAssignmentBriefId());
+            ps.setInt(1, submission.getOralMark());
+            ps.setInt(2, submission.getTotalMark());
+            ps.setDate(3, Date.valueOf(submission.getSubmissionDate().toLocalDate())); //todo fix
+            ps.setLong(4, submission.getSubmissionBriefingId());
 
             updateSuccess = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -94,7 +93,6 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         AssignmentSubmission submission = new AssignmentSubmission();
-        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
 
         try {
             con = DBConnection.getConnection();
@@ -107,7 +105,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 submission.setOralMark(rs.getInt("oral_mark"));
                 submission.setTotalMark(rs.getInt("total_mark"));
                 submission.setSubmissionDate(rs.getTimestamp("submission_date").toLocalDateTime());
-                submission.setSubmissionBriefing(brdao.get(rs.getInt("assignment_brief_id")));
+                submission.setSubmissionBriefingId(rs.getInt("assignment_brief_id"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -131,7 +129,6 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentSubmission> submissions = new ArrayList<>();
-        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
 
         try {
             con = DBConnection.getConnection();
@@ -146,7 +143,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 submission.setOralMark(rs.getInt("oral_mark"));
                 submission.setTotalMark(rs.getInt("total_mark"));
                 submission.setSubmissionDate(rs.getTimestamp("submission_date").toLocalDateTime());
-                submission.setSubmissionBriefing(brdao.get(rs.getInt("assignment_brief_id")));
+                submission.setSubmissionBriefingId(rs.getInt("assignment_brief_id"));
 
                 submissions.add(submission);
             }
@@ -175,7 +172,6 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentSubmission> submissions = new ArrayList<>();
-        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
 
         try {
             con = DBConnection.getConnection();
@@ -191,7 +187,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
                 submission.setOralMark(rs.getInt("oral_mark"));
                 submission.setTotalMark(rs.getInt("total_mark"));
                 submission.setSubmissionDate(rs.getTimestamp("submission_date").toLocalDateTime());
-                submission.setSubmissionBriefing(brdao.get(rs.getInt("assignment_brief_id")));
+                submission.setSubmissionBriefingId(rs.getInt("assignment_brief_id"));
 
                 submissions.add(submission);
             }

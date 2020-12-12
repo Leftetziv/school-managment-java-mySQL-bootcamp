@@ -34,7 +34,6 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentBriefing> briefings = new ArrayList<>();
-        CourseDao cdao = DaoFactory.getCourseDao();
 
         try {
             con = DBConnection.getConnection();
@@ -50,7 +49,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
                 br.setMaxOralMark(rs.getInt("max_oral_mark"));
                 br.setMaxTotalMark(rs.getInt("max_total_mark"));
                 br.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
-                br.setBelongingCourse(cdao.get(rs.getInt("course_id")));
+                br.setBelongingCourseId(rs.getInt("course_id"));
                 br.setIsGroupProject(rs.getBoolean("is_group_project"));
 
                 briefings.add(br);
@@ -79,7 +78,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
             ps.setInt(3, br.getMaxOralMark());
             ps.setInt(4, br.getMaxTotalMark());
             ps.setDate(5, Date.valueOf(br.getDueDate().toLocalDate())); //todo fix
-            ps.setLong(6, br.getBelongingCourse().getCourseId());
+            ps.setLong(6, br.getBelongingCourseId());
             ps.setBoolean(7, br.isIsGroupProject());
             
             updateSuccess = ps.executeUpdate();
@@ -98,8 +97,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
-        AssignmentBriefing briefing = new AssignmentBriefing();
-        CourseDao cdao = DaoFactory.getCourseDao();
+        AssignmentBriefing br = new AssignmentBriefing();
 
         try {
             con = DBConnection.getConnection();
@@ -108,14 +106,14 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                briefing.setAssignmentBriefId(rs.getInt("assignment_brief_id"));
-                briefing.setTitle(rs.getString("title"));
-                briefing.setDescription(rs.getString("description"));
-                briefing.setMaxOralMark(rs.getInt("max_oral_mark"));
-                briefing.setMaxTotalMark(rs.getInt("max_total_mark"));
-                briefing.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
-                briefing.setBelongingCourse(cdao.get(rs.getInt("course_id")));
-                briefing.setIsGroupProject(rs.getBoolean("is_group_project"));
+                br.setAssignmentBriefId(rs.getInt("assignment_brief_id"));
+                br.setTitle(rs.getString("title"));
+                br.setDescription(rs.getString("description"));
+                br.setMaxOralMark(rs.getInt("max_oral_mark"));
+                br.setMaxTotalMark(rs.getInt("max_total_mark"));
+                br.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
+                br.setBelongingCourseId(rs.getInt("course_id"));
+                br.setIsGroupProject(rs.getBoolean("is_group_project"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -123,7 +121,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
             DBConnection.closeConnection(rs, ps, con);
         }
 
-        return briefing;
+        return br;
     }
 
     @Override
@@ -137,7 +135,6 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentBriefing> briefings = new ArrayList<>();
-        CourseDao cdao = DaoFactory.getCourseDao();
             
         try {
             con = DBConnection.getConnection();
@@ -154,7 +151,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
                 br.setMaxOralMark(rs.getInt("max_oral_mark"));
                 br.setMaxTotalMark(rs.getInt("max_total_mark"));
                 br.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
-                br.setBelongingCourse(cdao.get(rs.getInt("course_id")));
+                br.setBelongingCourseId(rs.getInt("course_id"));
                 br.setIsGroupProject(rs.getBoolean("is_group_project"));
 
                 briefings.add(br);

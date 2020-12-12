@@ -28,7 +28,7 @@ public class CourseService {
         StreamDao sdao = DaoFactory.getStreamDao();
         TypeDao tdao = DaoFactory.getTypeDao();
         String format = "%-5s%-23s%-23s%-23s%-15s%-15s%n";
-        System.out.printf(format, c.getCourseId(), c.getTitle(), sdao.get(c.getStream()).getStream(), tdao.get(c.getType()).getType(), c.getStartDate(), c.getEndDate());
+        System.out.printf(format, c.getCourseId(), c.getTitle(), sdao.get(c.getStreamId()).getStream(), tdao.get(c.getTypeId()).getType(), c.getStartDate(), c.getEndDate());
     }
 
     public static void columnPrint() {

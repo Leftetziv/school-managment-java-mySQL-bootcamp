@@ -51,7 +51,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getLong("subject_id"));
+                t.setSubjectId(rs.getLong("subject_id"));
 
                 trainers.add(t);
             }
@@ -82,7 +82,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getLong("subject_id"));
+                t.setSubjectId(rs.getLong("subject_id"));
 
                 trainers.add(t);
             }
@@ -107,7 +107,7 @@ public class TrainerDaoImpl implements TrainerDao {
             ps = con.prepareStatement(sql);
             ps.setString(1, t.getFirstName());
             ps.setString(2, t.getLastName());
-            ps.setLong(3, t.getSubject());
+            ps.setLong(3, t.getSubjectId());
             
             updateSuccess = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -137,7 +137,7 @@ public class TrainerDaoImpl implements TrainerDao {
                 t.setTrainerId(rs.getInt("trainer_id"));
                 t.setFirstName(rs.getString("first_name"));
                 t.setLastName(rs.getString("last_name"));
-                t.setSubject(rs.getLong("subject"));
+                t.setSubjectId(rs.getLong("subject"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
