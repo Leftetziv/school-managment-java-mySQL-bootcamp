@@ -39,7 +39,7 @@ public class StudentService {
         courses.stream().forEach(i -> CourseService.print(i));
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
-        long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
+        long courseId = ReadFromUserUtilities.readLong(selections);
 
         columnPrint();
         dao.getStudentsPerCourse(courseId).stream().forEach(i -> print(i));

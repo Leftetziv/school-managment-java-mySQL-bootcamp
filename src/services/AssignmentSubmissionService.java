@@ -44,7 +44,7 @@ public class AssignmentSubmissionService {
         courses.stream().forEach(i -> CourseService.print(i));
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
-        long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
+        long courseId = ReadFromUserUtilities.readLong(selections);
 
         columnPrint();
         dao.getAssignmentSubmissionPerCourse(courseId).stream().forEach(i -> print(i));
@@ -62,7 +62,7 @@ public class AssignmentSubmissionService {
         courses.stream().forEach(i -> CourseService.print(i));
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
-        long courseId = ReadFromUserUtilities.readNumberOrQuit(selections);
+        long courseId = ReadFromUserUtilities.readLong(selections);
 
         System.out.println("Enter the student ID:");
         List<Student> students = sdao.getStudentsPerCourse(courseId);

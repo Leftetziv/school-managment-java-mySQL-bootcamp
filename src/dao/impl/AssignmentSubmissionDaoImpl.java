@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import model.AssignmentBriefing;
@@ -73,7 +74,7 @@ public class AssignmentSubmissionDaoImpl implements AssignmentSubmissionDao {
             ps = con.prepareStatement(sql);
             ps.setInt(1, submission.getOralMark());
             ps.setInt(2, submission.getTotalMark());
-            ps.setDate(3, Date.valueOf(submission.getSubmissionDate().toLocalDate())); //todo fix
+            ps.setTimestamp(3, Timestamp.valueOf(submission.getSubmissionDate()));
             ps.setLong(4, submission.getSubmissionBriefingId());
 
             updateSuccess = ps.executeUpdate();

@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import model.AssignmentBriefing;
@@ -65,7 +66,8 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
 
     @Override
     public boolean save(AssignmentBriefing br) {
-        String sql = "INSERT INTO assignment_briefings (`title`, `description`, `max_oral_mark`, `max_total_mark`, 'due_date, 'course_id', 'is_group_project') VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO assignment_briefings (`title`, `description`, `max_oral_mark`, `max_total_mark`, `due_date`, `course_id`, `is_group_project`) \n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = null;
         int updateSuccess = 0;
@@ -77,10 +79,10 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
             ps.setString(2, br.getDescription());
             ps.setInt(3, br.getMaxOralMark());
             ps.setInt(4, br.getMaxTotalMark());
-            ps.setDate(5, Date.valueOf(br.getDueDate().toLocalDate())); //todo fix
+            ps.setTimestamp(5, Timestamp.valueOf(br.getDueDate()));
             ps.setLong(6, br.getBelongingCourseId());
             ps.setBoolean(7, br.isIsGroupProject());
-            
+
             updateSuccess = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -135,7 +137,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<AssignmentBriefing> briefings = new ArrayList<>();
-            
+
         try {
             con = DBConnection.getConnection();
             ps = con.prepareStatement(sql);

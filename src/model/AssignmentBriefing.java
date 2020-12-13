@@ -81,8 +81,6 @@ public class AssignmentBriefing {
         this.belongingCourseId = belongingCourseId;
     }
 
-    
-
     public boolean isIsGroupProject() {
         return isGroupProject;
     }

@@ -22,18 +22,7 @@ import java.util.Scanner;
  */
 public class ReadFromUserUtilities {
 
-    
-    private static Scanner sc = new Scanner(System.in);   //normal keaboard reading
-    
-//    public static Scanner sc;               //for input testing 
-//    static {                                //for input testing
-//        try {
-//            File text = new File("input.txt");
-//            sc = new Scanner(text);
-//        } catch (FileNotFoundException e) {
-//            sc = new Scanner(System.in);
-//        }
-//    }
+    private static Scanner sc = new Scanner(System.in);
 
     public static long readNumberOrQuit(List<Long> numberList) {
         String answerStr;
@@ -58,54 +47,65 @@ public class ReadFromUserUtilities {
             }
         } while (true);
     }
-
-    public static ArrayList<Integer> readListOfNumbersOrQuit(int start, int end) {
-        ArrayList<Integer> numberList = new ArrayList<>();
+    
+    public static long readLong(List<Long> numberList) {
         String answerStr;
-        List<String> splittedStr;
 
         do {
             answerStr = sc.nextLine();
 
-            if ("q".equalsIgnoreCase(answerStr)) {
-                numberList.add(-1);
-                return numberList;
-            }
-
             try {
-                splittedStr = Arrays.asList(answerStr.split(","));
-                splittedStr.stream().forEach(String::trim);
+                Long answerLong = Long.parseLong(answerStr);
 
-                for (String s : splittedStr) {
-                    numberList.add(Integer.parseInt(s));
-                }
-
-                if (numberList.stream().anyMatch(i -> i >= start) && numberList.stream().anyMatch(i -> i <= end)) {
-                    return numberList;
+                if (numberList.contains(answerLong)) {
+                    return answerLong;
                 } else {
-                    System.out.println("Wrong input, input a numbers from " + start + " to " + end);
+                    System.out.println("Wrong input, input a valid number");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Wrong input, input a number from " + start + " to " + end + ", or q to quit. Seperate multiple values by a comma");
+                System.out.println("Wrong input, input a valid number");
+            }
+        } while (true);
+    }
+    
+    public static int readInt() {
+        String answerStr;
+        int answerInt;
+
+        do {
+            answerStr = sc.nextLine();
+
+            try {
+                answerInt = Integer.parseInt(answerStr);
+                if (answerInt < 0) {
+                    System.out.println("Cant be a negative number");
+                    continue;
+                }
+                return answerInt;
+            } catch (NumberFormatException e) {
+                System.out.println("Must input a number");
             }
         } while (true);
     }
 
-    public static LocalDate readDateOrQuit() {
+    
+
+    public static double readDouble() {
         String answerStr;
+        double answerInt;
 
         do {
             answerStr = sc.nextLine();
 
-            if ("q".equalsIgnoreCase(answerStr)) {
-                return LocalDate.parse("0001-01-01");                           //could throw an exeption instead
-            }
-
             try {
-                LocalDate date = LocalDate.parse(answerStr);
-                return date;
-            } catch (DateTimeParseException e) {
-                System.out.println("Wrong input, enter a date in format YYYY-MM-DD, or q to quit");
+                answerInt = Double.parseDouble(answerStr);
+                if (answerInt < 0) {
+                    System.out.println("Cant be a negative number");
+                    continue;
+                }
+                return answerInt;
+            } catch (NumberFormatException e) {
+                System.out.println("Must input a number");
             }
         } while (true);
     }
@@ -153,46 +153,6 @@ public class ReadFromUserUtilities {
         } while (true);
     }
 
-    public static int readInt() {
-        String answerStr;
-        int answerInt;
-
-        do {
-            answerStr = sc.nextLine();
-
-            try {
-                answerInt = Integer.parseInt(answerStr);
-                if (answerInt < 0) {
-                    System.out.println("Cant be a negative number");
-                    continue;
-                }
-                return answerInt;
-            } catch (NumberFormatException e) {
-                System.out.println("Must input a number");
-            }
-        } while (true);
-    }
-    
-    public static double readDouble() {
-        String answerStr;
-        double answerInt;
-
-        do {
-            answerStr = sc.nextLine();
-
-            try {
-                answerInt = Double.parseDouble(answerStr);
-                if (answerInt < 0) {
-                    System.out.println("Cant be a negative number");
-                    continue;
-                }
-                return answerInt;
-            } catch (NumberFormatException e) {
-                System.out.println("Must input a number");
-            }
-        } while (true);
-    }
-
     public static boolean readYesOrNo() {
         String answerStr;
 
@@ -207,6 +167,5 @@ public class ReadFromUserUtilities {
                 System.out.println("Must input yes or no");
             }
         } while (true);
-
     }
 }

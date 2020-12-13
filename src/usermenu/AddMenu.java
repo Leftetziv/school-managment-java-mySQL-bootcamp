@@ -45,39 +45,26 @@ public class AddMenu {
 
         switch (answerLong.intValue()) {
             case 1:
-                CourseService.addCourse();
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
+                CourseService.addCourse();              
                 break;
             case 2:
                 TrainerService.addTrainer();
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
                 break;
             case 3:
                 StudentService.addStudent();            
                 break;
             case 4:
-                AssignmentBriefingService.addAssignmentBriefing();
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
+                AssignmentBriefingService.addAssignmentBriefing();              
                 break;
             case 5:
-                AssignmentSubmissionService.addAssignmentSubmission();
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
+                AssignmentSubmissionService.addAssignmentSubmission();                
                 break;
             case 6:
-                StudentCourseService.enrollStudent();
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
+                StudentCourseService.enrollStudent();                
                 break;
             case 7:
-                TrainerCourseService.assignTrainer();//??? eite edo eite sto TrainerCourseService
-                System.out.println("Press enter to continue...");
-                sc.nextLine();
-                break;
-            default:
+                TrainerCourseService.assignTrainer();//??? eite edo eite sto TrainerCourseService               
+                break;           
         }
     }
 }
