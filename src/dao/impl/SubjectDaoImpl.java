@@ -26,7 +26,7 @@ public class SubjectDaoImpl implements SubjectDao {
 
     @Override
     public List<Subject> getAll() {
-        String sql = "SELECT * FROM subject";
+        String sql = "SELECT * FROM subjects";
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Subject> subjects = new ArrayList<>();

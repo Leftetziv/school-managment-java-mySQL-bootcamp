@@ -10,6 +10,7 @@ import dao.AssignmentSubmissionDao;
 import dao.CourseDao;
 import dao.DaoFactory;
 import dao.StudentDao;
+import dao.StudentsSubmissionsDao;
 import java.util.ArrayList;
 import java.util.List;
 import model.AssignmentBriefing;
@@ -101,6 +102,72 @@ public class AssignmentSubmissionService {
     }
 
     public static void addAssignmentSubmission() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AssignmentSubmissionDao dao = DaoFactory.getAssignmentSubmissionDao();
+        AssignmentBriefingDao brdao = DaoFactory.getAssignmentBriefingDao();
+        CourseDao cdao = DaoFactory.getCourseDao();
+        StudentDao sdao = DaoFactory.getStudentDao();
+        StudentsSubmissionsDao studSubmDao = DaoFactory.getStudentsSubmissionsDao();
+        
+        List<Long> selections = new ArrayList<>();
+
+        AssignmentSubmission assignment = new AssignmentSubmission();
+
+        System.out.println("Creating student submission:");
+        System.out.println("Select the course ID that the assignment belongs");
+
+        List<Course> courses = cdao.getAll();
+        CourseService.columnPrint();
+        courses.stream().forEach(i -> CourseService.print(i));
+        courses.stream().forEach(i -> selections.add(i.getCourseId()));
+        long courseId = ReadFromUserUtilities.readLong(selections);     //course
+        selections.clear();
+
+        System.out.println("Select the briefing ID that the assignment belongs");
+        List<AssignmentBriefing> briefings = brdao.getAssignmentBriefingPerCourse(courseId);
+        AssignmentBriefingService.columnPrint();
+        briefings.stream().forEach(i -> AssignmentBriefingService.print(i));
+
+        briefings.stream().forEach(i -> selections.add(i.getAssignmentBriefId()));
+        long briefingId = ReadFromUserUtilities.readLong(selections);   //briefing
+        assignment.setSubmissionBriefingId(briefingId);
+        selections.clear();
+
+        System.out.println("Enter the assignment oral mark:");
+        assignment.setOralMark(ReadFromUserUtilities.readInt());
+        System.out.println("Enter the assignment total mark:");     //TODO total have to be greater than oral
+        assignment.setTotalMark(ReadFromUserUtilities.readInt());
+        System.out.println("Enter the submission date and time:");
+        assignment.setSubmissionDate(ReadFromUserUtilities.readDateTime());
+
+        boolean success = dao.save(assignment);
+        
+        long submissionCreated = dao.getAll().stream().max((i, j) -> i.compareTo(j)).get().getAssignmentSubmissionId();
+       
+        boolean isGroupAssignment = briefings.stream().filter(i -> i.getAssignmentBriefId() == briefingId).findFirst().get().isIsGroupProject();
+
+        List<Long> studentsId =  new ArrayList<>();
+        if (!isGroupAssignment) {
+            System.out.println("Select the student ID that submited this assignment");
+            List<Student> students = sdao.getStudentsPerCourse(courseId);
+            StudentService.columnPrint();
+            students.stream().forEach(i -> StudentService.print(i));
+            students.stream().forEach(i -> selections.add(i.getStudentId()));
+            studentsId.add(ReadFromUserUtilities.readLong(selections));  //one student           
+        } else {
+            System.out.println("Select the students ID's that submitted this assignment. Seperate their ID with commas (,)");
+            List<Student> students = sdao.getStudentsPerCourse(courseId);
+            StudentService.columnPrint();
+            students.stream().forEach(i -> StudentService.print(i));
+            students.stream().forEach(i -> selections.add(i.getStudentId()));
+            studentsId.addAll(ReadFromUserUtilities.readListOfLong(selections));  //one or more students
+        }
+
+        studSubmDao.save(studentsId, submissionCreated);
+        
+        if (success) {
+            System.out.println("Insertion successful");
+        } else {
+            System.out.println("Insertion failed");
+        }
     }
 }

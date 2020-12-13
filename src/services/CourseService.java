@@ -7,8 +7,12 @@ package services;
 
 import dao.DaoFactory;
 import dao.*;
+import java.util.ArrayList;
+import java.util.List;
 import model.Course;
 import model.Student;
+import model.Trainer;
+import model.lookup_tables.*;
 import utilities.ReadFromUserUtilities;
 
 /**
@@ -37,8 +41,46 @@ public class CourseService {
     }
 
     public static void addCourse() {
+        CourseDao dao = DaoFactory.getCourseDao();
+        StreamDao sdao = DaoFactory.getStreamDao();
+        TypeDao tdao = DaoFactory.getTypeDao();
+        List<Long> selections = new ArrayList<>();
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Course course = new Course();
+
+        System.out.println("Enter the course title:");
+        course.setTitle(ReadFromUserUtilities.readString());
+        
+        System.out.println("Select the stream ID of the course");
+        List<Stream> streams = sdao.getAll();
+        StreamService.columnPrint();
+        streams.stream().forEach(i -> StreamService.print(i));
+        streams.stream().forEach(i -> selections.add(i.getStreamId()));
+        long streamId = ReadFromUserUtilities.readLong(selections);
+        course.setStreamId(streamId);
+        
+        System.out.println("Select the type ID of the course");
+        List<Type> types = tdao.getAll();
+        TypeService.columnPrint();
+        types.stream().forEach(i -> TypeService.print(i));
+        types.stream().forEach(i -> selections.add(i.getTypeId()));
+        long typeId = ReadFromUserUtilities.readLong(selections);
+        course.setTypeId(typeId);
+        
+        System.out.println("Enter the course start date:");
+        course.setStartDate(ReadFromUserUtilities.readDate());
+        System.out.println("Enter the course end date:");
+        course.setEndDate(ReadFromUserUtilities.readDate());
+
+        
+        boolean success = dao.save(course);
+
+        if (success) {
+            System.out.println("Insertion successful");
+        } else {
+            System.out.println("Insertion failed");
+        }
+
     }
 
 }

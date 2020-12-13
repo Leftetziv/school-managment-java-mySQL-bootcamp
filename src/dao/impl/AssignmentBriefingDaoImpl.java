@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import model.AssignmentBriefing;
@@ -50,6 +52,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
                 br.setMaxOralMark(rs.getInt("max_oral_mark"));
                 br.setMaxTotalMark(rs.getInt("max_total_mark"));
                 br.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
+//                br.setDueDate(rs.getTimestamp("due_date").toInstant().atZone(ZoneOffset.UTC).toLocalDateTime());
                 br.setBelongingCourseId(rs.getInt("course_id"));
                 br.setIsGroupProject(rs.getBoolean("is_group_project"));
 
@@ -80,6 +83,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
             ps.setInt(3, br.getMaxOralMark());
             ps.setInt(4, br.getMaxTotalMark());
             ps.setTimestamp(5, Timestamp.valueOf(br.getDueDate()));
+//            ps.setTimestamp(5,   Timestamp.valueOf(br.getDueDate().atZone(ZoneId.systemDefault()).toOffsetDateTime().toLocalDateTime())         );
             ps.setLong(6, br.getBelongingCourseId());
             ps.setBoolean(7, br.isIsGroupProject());
 
@@ -152,6 +156,7 @@ public class AssignmentBriefingDaoImpl implements AssignmentBriefingDao {
                 br.setDescription(rs.getString("description"));
                 br.setMaxOralMark(rs.getInt("max_oral_mark"));
                 br.setMaxTotalMark(rs.getInt("max_total_mark"));
+//                br.setDueDate(rs.getTimestamp("due_date").toInstant().atZone(ZoneOffset.UTC).toLocalDateTime());
                 br.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
                 br.setBelongingCourseId(rs.getInt("course_id"));
                 br.setIsGroupProject(rs.getBoolean("is_group_project"));

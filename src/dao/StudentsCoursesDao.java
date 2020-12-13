@@ -16,5 +16,5 @@ public interface StudentsCoursesDao {
 
     List<Student> getStudentsInMultipleCourses();
 
-    boolean save(long sid, long cid);
+    boolean save(long sId, long cId);
 }

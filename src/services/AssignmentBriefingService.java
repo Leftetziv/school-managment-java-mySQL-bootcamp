@@ -51,7 +51,7 @@ public class AssignmentBriefingService {
 
         Course BelongingCourse = cdao.get(ass.getBelongingCourseId());
 
-        String format = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n%s%n%n";
+        String format = "%-5s%-32s%-15s%-15s%-20s%-15s%-15s%-15s%-15s%n\t%s%n%n";
         System.out.printf(format,
                 ass.getAssignmentBriefId(),
                 ass.getTitle(),
@@ -108,7 +108,7 @@ public class AssignmentBriefingService {
 
         courses.stream().forEach(i -> selections.add(i.getCourseId()));
         long courseId = ReadFromUserUtilities.readLong(selections);
-        assignment.setBelongingCourseId(courseId); //todo user select
+        assignment.setBelongingCourseId(courseId);
 
         boolean success = dao.save(assignment);
 

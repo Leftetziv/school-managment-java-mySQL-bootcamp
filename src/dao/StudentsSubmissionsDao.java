@@ -6,14 +6,12 @@
 package dao;
 
 import java.util.List;
-import model.Student;
-import model.Trainer;
 
 /**
  *
  * @author Leyteris
  */
-public interface TrainersCoursesDao {
+public interface StudentsSubmissionsDao {
 
-    boolean save(long sId, long cId);
+    void save(List<Long> studentsId, long submId);
 }

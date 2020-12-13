@@ -48,7 +48,7 @@ public class ReadFromUserUtilities {
         } while (true);
     }
     
-    public static long readLong(List<Long> numberList) {
+    public static long readLong(List<Long> selectionList) {
         String answerStr;
 
         do {
@@ -57,13 +57,40 @@ public class ReadFromUserUtilities {
             try {
                 Long answerLong = Long.parseLong(answerStr);
 
-                if (numberList.contains(answerLong)) {
+                if (selectionList.contains(answerLong)) {
                     return answerLong;
                 } else {
                     System.out.println("Wrong input, input a valid number");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Wrong input, input a valid number");
+            }
+        } while (true);
+    }
+    
+    public static List<Long> readListOfLong(List<Long> selectionList) {
+        List<Long> numberList = new ArrayList<>();
+        String answerStr;
+        List<String> splittedStr;
+
+        do {
+            answerStr = sc.nextLine();
+
+            try {
+                splittedStr = Arrays.asList(answerStr.split(","));
+                splittedStr.stream().forEach(String::trim);
+
+                for (String s : splittedStr) {
+                    numberList.add(Long.parseLong(s));
+                }
+
+                if (selectionList.containsAll(numberList)) {
+                    return numberList;
+                } else {
+                    System.out.println("Wrong input, Seperate multiple values by a comma");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Wrong input, Seperate multiple values by a comma");
             }
         } while (true);
     }

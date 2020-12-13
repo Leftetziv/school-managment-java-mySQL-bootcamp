@@ -12,6 +12,7 @@ import java.util.List;
 import model.Course;
 import model.Student;
 import model.Trainer;
+import model.lookup_tables.Subject;
 import static services.StudentService.columnPrint;
 import static services.StudentService.print;
 import utilities.ReadFromUserUtilities;
@@ -58,7 +59,32 @@ public class TrainerService {
     }
 
     public static void addTrainer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TrainerDao dao = DaoFactory.getTrainerDao();
+        SubjectDao sdao = DaoFactory.getSubjectDao();
+        List<Long> selections = new ArrayList<>();
+
+        Trainer trainer = new Trainer();
+        System.out.println("\nCreating trainer for the course:");
+        System.out.println("Enter the trainer first name:");
+        trainer.setFirstName(ReadFromUserUtilities.readString());
+        System.out.println("Enter the trainer last name:");
+        trainer.setLastName(ReadFromUserUtilities.readString());
+        
+        System.out.println("Select the subject ID of the trainer");
+        List<Subject> subjects = sdao.getAll();
+        SubjectService.columnPrint();
+        subjects.stream().forEach(i -> SubjectService.print(i));
+        subjects.stream().forEach(i -> selections.add(i.getSubjectId()));
+        long subjectId = ReadFromUserUtilities.readLong(selections);
+        trainer.setSubjectId(subjectId);
+
+        boolean success = dao.save(trainer);
+
+        if (success) {
+            System.out.println("Insertion successful");
+        } else {
+            System.out.println("Insertion failed");
+        }
     }
 
 }

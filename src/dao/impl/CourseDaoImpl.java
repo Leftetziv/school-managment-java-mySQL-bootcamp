@@ -62,7 +62,7 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public boolean save(Course c) {
-        String sql = "INSERT INTO courses (`title`, `stream_id`, `type_id`, `start_date`, 'end_date') VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO courses (`title`, `stream_id`, `type_id`, `start_date`, `end_date`) VALUES (?, ?, ?, ?, ?);";
 
         PreparedStatement ps = null;
         int updateSuccess = 0;

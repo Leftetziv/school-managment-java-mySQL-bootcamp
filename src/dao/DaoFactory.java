@@ -34,7 +34,7 @@ public class DaoFactory {
     }
     
     public static StudentsCoursesDao getStudentsCoursesDao() {
-        return new StudentCoursesDaoImpl();
+        return new StudentsCoursesDaoImpl();
     }
     
     public static TrainersCoursesDao getStudentCoursesDao() {
@@ -49,6 +49,10 @@ public class DaoFactory {
     }
     public static SubjectDao getSubjectDao() {
         return new SubjectDaoImpl();
+    }
+    
+    public static StudentsSubmissionsDao getStudentsSubmissionsDao() {
+        return new StudentsSubmissionsDaoImpl();
     }
     
     

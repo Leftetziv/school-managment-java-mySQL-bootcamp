@@ -6,6 +6,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  *
@@ -60,6 +61,10 @@ public class AssignmentSubmission {
 
     public void setSubmissionBriefingId(long submissionBriefingId) {
         this.submissionBriefingId = submissionBriefingId;
+    }
+
+    public int compareTo(AssignmentSubmission j) {
+        return (int) (this.assignmentSubmissionId - j.assignmentSubmissionId);
     }
 
     

@@ -19,12 +19,10 @@ import repository.DBConnection;
  *
  * @author Leyteris
  */
-public class StudentCoursesDaoImpl implements StudentsCoursesDao {
+public class StudentsCoursesDaoImpl implements StudentsCoursesDao {
 
     private Connection con = null;
 
-    
-    
     @Override
     public List<Student> getStudentsInMultipleCourses() {
         String sql = "select	students.*\n"
@@ -33,7 +31,7 @@ public class StudentCoursesDaoImpl implements StudentsCoursesDao {
                 + "where 	students.student_id = students_courses.student_id\n"
                 + "group by     students_courses.student_id\n"
                 + "having 	count(students_courses.student_id)>1;";
-        
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Student> students = new ArrayList<>();
